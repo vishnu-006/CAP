@@ -1,0 +1,48 @@
+import java.util.* ;
+import java.io.*; 
+/************************************************************
+
+    Following is the TreeNode class structure
+
+    class TreeNode {
+	int val;
+	TreeNode left;
+	TreeNode right;
+
+	TreeNode(int val) {
+		this.val = val;
+		this.left = null;
+		this.right = null;
+	   }
+	}
+
+
+************************************************************/
+
+public class Solution {
+	public static int getMaxWidth(TreeNode root) {
+		if (root == null){
+			return 0;
+		}
+		// Write your code here.
+		Queue<TreeNode> line  = new LinkedList<>();
+		ArrayList<Integer> arr = new ArrayList<>();
+		//int sizee =0;
+		int max_width = 1;
+		line.add(root);
+		while(!line.isEmpty()){
+			int size = line.size();
+			
+			for(int i =0;i<size;i++){
+				TreeNode curr = line.poll();
+				arr.add(curr.val);
+				if(curr.left!=null) line.add(curr.left);
+				if(curr.right!=null) line.add(curr.right);
+			}
+			//sizee  =arr.size;
+			max_width = Math.max(max_width,arr.size());
+			arr.clear();
+		}
+		return max_width;
+	}
+}
