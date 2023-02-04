@@ -1,0 +1,95 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public List<Integer> getAllElements(TreeNode root1, TreeNode root2) {
+        ArrayList<Integer> arr = new ArrayList<>();
+        Preorder(root1,arr);
+        Preorder(root2,arr);
+        Collections.sort(arr);
+        return arr;
+        
+    }
+    public void Preorder(TreeNode root,ArrayList<Integer> arr){
+        if(root == null){
+            return;
+        }
+        arr.add(root.val);
+        Preorder(root.left,arr);
+        Preorder(root.right,arr);
+    }
+}
+
+
+
+****************************************************************************Method2*****************************************************************
+
+
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public List<Integer> getAllElements(TreeNode root1, TreeNode root2) {
+        Stack<TreeNode> stack1 = new Stack<>();
+        Stack<TreeNode> stack2 = new Stack<>();
+        ArrayList<Integer> arr = new ArrayList<>();
+        TreeNode curr = root1;
+        TreeNode curr2 = root2;
+        while(true){
+            if(curr != null){
+                stack1.push(curr);
+                curr = curr.left;
+            }
+            else{
+                if(stack1.isEmpty()){
+                    break;
+                }
+                curr = stack1.pop();
+                arr.add(curr.val);
+                curr = curr.right;
+            }
+        }
+        while(true){
+            if(curr2 != null){
+                stack2.push(curr2);
+                curr2 = curr2.left;
+            }
+            else{
+                if(stack2.isEmpty()){
+                    break;
+                }
+                curr2 = stack2.pop();
+                arr.add(curr2.val);
+                curr2 = curr2.right;
+            }
+        }
+        Collections.sort(arr);
+        return arr;
+        
+    }
+}
