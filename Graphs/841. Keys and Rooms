@@ -1,0 +1,21 @@
+class Solution {
+    public boolean canVisitAllRooms(List<List<Integer>> rooms) {
+        HashSet<Integer> visited = new HashSet<>();
+        Queue<Integer> line = new LinkedList<>();
+        line.add(0);
+        visited.add(0);
+        while(!line.isEmpty()){
+            if(visited.size()==rooms.size()) return true;
+            int k = line.poll();
+            List<Integer> room = rooms.get(k);
+            for(int i : room){
+                if(!visited.contains(i)){
+                    visited.add(i);
+                    line.add(i);    
+                }
+            }
+        }
+        return false;
+        
+    }
+}
