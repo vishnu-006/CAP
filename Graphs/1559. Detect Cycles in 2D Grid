@@ -1,0 +1,47 @@
+class Solution {
+    int [][] directions = new int [][]{{1, 0},{-1, 0},{0, 1},{0, -1}};
+    int m; int n;
+    public boolean containsCycle(char[][] grid) {
+        m = grid.length;
+        if(m==0) return false;
+        n= grid[0].length;
+        
+        boolean visited[][] = new boolean [m][n];
+        int [][] parent = new int [m][n];
+        
+        for(int i=0;i<m;i++){
+            for(int j=0;j<n;j++){
+                if(!visited[i][j]){
+                    int num = getValue(i, j);
+                    if(dfs(i, j, grid, visited, parent, num)) return true;
+                }
+            }
+        }
+        return false;
+        
+    }
+    
+    boolean dfs(int sr, int sc, char [][] grid, boolean visited[][] , int [][] parent, int source){
+        visited[sr][sc]=true;
+        parent[sr][sc] = source;
+        int num = getValue(sr, sc);
+        for(int [] dir:directions){
+            int cr = dir[0]+sr;
+            int cc = dir[1]+sc;
+            if(cr>=0 && cr<m && cc>=0 && cc<n && grid[sr][sc]== grid[cr][cc]){
+                if(!visited[cr][cc]){
+                    if(dfs(cr, cc, grid, visited, parent, num)) return true;
+                }else{
+                    if(parent[sr][sc]!=getValue(cr, cc)) 
+                        return true;
+                }
+            }
+        }
+        return false;
+    }
+    
+    int getValue(int i, int j){
+        return i*n+j;
+    }
+    
+}
